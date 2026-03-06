@@ -54,7 +54,9 @@ API.interceptors.response.use(
 //  USER APIs
 //
 export const getUserProfile = () => API.get('/users/me');  //Done
-export const registerUser = (formData) => API.post("/users/register", formData); //Done
+export const registerUser = (formData, config = {}) => API.post("/users/register", formData, config); //Done
+export const verifyRegistrationOtp = (data) => API.post("/users/verify-registration-otp", data);
+export const resendRegistrationOtp = (data) => API.post("/users/resend-registration-otp", data);
 export const loginUser = (data) => API.post("/users/login", data); //Done
 export const logoutUser = () => API.get("/users/logout"); //Done
 export const updateUserInfo = (data) => API.patch("/users/profile", data); //Done
