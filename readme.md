@@ -49,6 +49,17 @@ VidTwit is a full-featured backend and frontend for a YouTube-style video sharin
 
 ---
 
+## Table of Contents
+
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Environment Variables](#environment-variables)
+- [Run Locally](#run-locally)
+- [Author](#author)
+- [Contributors](#contributors)
+
+---
+
 ## Environment Variables
 
 ### Backend
