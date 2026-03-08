@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:6.0
+    container_name: vidtwit-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password123
+      MONGO_INITDB_DATABASE: vidtwit
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - vidtwit-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: vidtwit-backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      MONGO_URI: mongodb://admin:password123@mongodb:27017/vidtwit?authSource=admin
+      ACCESS_TOKEN_SECRET: your_super_secret_access_token_here
+      REFRESH_TOKEN_SECRET: your_super_secret_refresh_token_here
+      ACCESS_TOKEN_EXPIRY: 1d
+      REFRESH_TOKEN_EXPIRY: 10d
+      # Add your Cloudinary credentials
+      MY_CLOUD_NAME: your_cloud_name
+      MY_CLOUD_API_KEY: your_api_key
+      MY_CLOUD_SECRET_KEY: your_api_secret
+      # Add your email credentials
+      EMAIL_HOST: smtp.gmail.com
+      EMAIL_PORT: 587
+      EMAIL_USER: your_email@gmail.com
+      EMAIL_PASS: your_app_password
+      EMAIL_FROM: your_email@gmail.com
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend/Public:/app/Public
+    networks:
+      - vidtwit-network
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vidtwit-frontend
+    restart: unless-stopped
+    environment:
+      VITE_BACKEND_URL: http://localhost:3000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - vidtwit-network
+
+volumes:
+  mongo_data:
+    driver: local
+
+networks:
+  vidtwit-network:
+    driver: bridge

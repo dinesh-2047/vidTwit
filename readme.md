@@ -55,6 +55,8 @@ VidTwit is a full-featured backend and frontend for a YouTube-style video sharin
 - [Tech Stack](#tech-stack)
 - [Environment Variables](#environment-variables)
 - [Run Locally](#run-locally)
+  - [Docker Setup (Recommended)](#docker-setup-recommended)
+  - [Manual Setup](#manual-setup)
 - [Author](#author)
 - [Contributors](#contributors)
 
@@ -92,9 +94,47 @@ VITE_BACKEND_URL=http://localhost:3000/api/v1
 
 ## Run Locally
 
+### Docker Setup (Recommended)
+
+The easiest way to get VidTwit running locally is with Docker. This ensures all services work together without manual setup.
+
+**Prerequisites:**
+- Docker Desktop installed and running
+- Git repository cloned locally
+
+**Quick Start:**
+```bash
+# Clone the repository
+git clone https://github.com/vallabhatech/vidTwit.git
+cd vidTwit
+
+# Start all services (builds containers if needed)
+docker-compose up --build
+
+# Stop all services
+docker-compose down
+```
+
+**Access Points:**
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:3000
+- Database: mongodb://localhost:27017
+
+**Features:**
+- ✅ Database persists automatically across restarts
+- ✅ Hot-reloading enabled for frontend development
+- ✅ All environment variables pre-configured
+- ✅ Services communicate via dedicated Docker network
+
+**Configuration:**
+Edit `docker-compose.yml` to customize:
+- Database credentials
+- Cloudinary settings
+- Email service configuration
+
 ### Backend
 ```bash
-# Clone the repo
+# Clone repo
 git clone https://github.com/sohaibkundi2/myTube.git
 cd vidtwit/backend
 
@@ -125,7 +165,6 @@ npm run dev
 Frontend should start on `http://localhost:5173`
 
 ---
-
 
 
 ---
